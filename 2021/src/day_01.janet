@@ -1,22 +1,20 @@
-(defn read-ints-from-file
+(defn read-ints
   "Reads integers from a file."
-  [file-path]
+  []
   (defn read-line-as-int
-    "Reads a single line as an integer from a file."
-    [f]
-    (def line (file/read f :line))
+    "Reads a single line as an integer."
+    []
+    (def line (getline))
     (if (nil? line) nil (scan-number (string/trim line))))
 
-  (def f (file/open file-path))
   (def ns (array/new 100))
-  (var n (read-line-as-int f))
+  (var n (read-line-as-int))
   (while (not (nil? n))
     (array/push ns n)
-    (set n (read-line-as-int f)))
-  (file/close f)
+    (set n (read-line-as-int)))
   ns)
 
-(def nums (read-ints-from-file "../res/day_01.txt"))
+(def nums (read-ints))
 (def [x _] (reduce
              (fn [[acc prev] el] (if (> el prev) [(+ acc 1) el] [acc el]))
              [0 (first nums)]
